@@ -29,6 +29,7 @@
 
         .container { max-width: 650px; margin: 1.5rem auto; padding: 0 1rem; }
         
+        /* Paywall Screen Overlay CSS Layout */
         .paywall-card { background: var(--card-bg); border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); border: 2px solid var(--accent); margin-top: 2rem; }
         .paywall-icon { font-size: 4rem; color: var(--accent); margin-bottom: 1rem; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
@@ -43,13 +44,16 @@
         .payment-box h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem; }
         .ussd-code { display: block; background: #e2e8f0; padding: 0.75rem; border-radius: 6px; font-family: monospace; font-size: 1.1rem; text-align: center; font-weight: bold; color: #000; margin: 0.5rem 0; cursor: pointer; border: 1px dashed #cbd5e1; }
         .tel-link { display: inline-block; background: var(--success); color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; width: 100%; text-align: center; margin-top: 0.5rem; box-shadow: 0 2px 4px rgb(0 0 0 / 0.1); }
-        .tg-link { display: inline-block; background: var(--telegram); color: white; text-decoration: none; padding: 0.75rem 1rem; border-radius: 8px; font-weight: bold; width: 100%; text-align: center; margin-top: 0.5rem; box-shadow: 0 2px 4px rgb(0 0 0 / 0.1); font-size: 1rem; }
+        .tg-link { display: inline-block; background: var(--telegram); color: white; text-decoration: none; padding: 0.75rem 1rem; border-radius: 8px; font-weight: bold; width: 100%; text-align: center; margin-top: 0.5rem; box-shadow: 0 2px 4px rgb(0 0 0 / 0.1); font-size: 1rem; transition: background 0.2s; }
+        .tg-link:hover { background: #0077b5; }
         
         .activation-form { display: flex; gap: 0.5rem; margin-top: 1rem; }
         .activation-form input { flex: 1; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; text-align: center; letter-spacing: 2px; }
-        .btn { background: var(--primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1rem; }
+        .btn { background: var(--primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-size: 1rem; }
+        .btn:hover { background: var(--primary-light); }
         .btn-success { background: var(--success); }
 
+        /* Quiz UI Layout */
         .hidden { display: none !important; }
         .quiz-info-bar { display: flex; justify-content: space-between; align-items: center; background: #e2e8f0; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
         .question-card { background: var(--card-bg); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 1.5rem; }
@@ -63,10 +67,16 @@
         .option-item.correct { border-color: var(--success); background: #ecfdf5; color: var(--success); font-weight: 600; }
         .option-item.wrong { border-color: var(--error); background: #fef2f2; color: var(--error); }
         .option-prefix { display: inline-block; width: 28px; height: 28px; background: #e2e8f0; border-radius: 50%; text-align: center; line-height: 28px; margin-right: 0.75rem; font-weight: bold; font-size: 0.85rem; flex-shrink: 0; }
+        .option-item.selected .option-prefix { background: var(--primary-light); color: white; }
+        .option-item.correct .option-prefix { background: var(--success); color: white; }
+        .option-item.wrong .option-prefix { background: var(--error); color: white; }
 
         .explanation-box { margin-top: 1rem; padding: 1rem; background: #f8fafc; border-left: 4px solid var(--primary-light); border-radius: 0 8px 8px 0; font-size: 0.9rem; color: var(--text-light); }
+        .explanation-box strong { color: var(--text); }
+
         .actions-container { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
         
+        /* Summary Results Block */
         .results-card { background: var(--card-bg); border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
         .score-circle { width: 120px; height: 120px; border-radius: 50%; background: #eff6ff; border: 5px solid var(--primary); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 1rem auto 1.5rem; }
         .score-num { font-size: 2rem; font-weight: 800; color: var(--primary); }
@@ -78,6 +88,7 @@
         .review-q { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
         .review-a { font-size: 0.9rem; color: var(--success); font-weight: 600; }
 
+        /* Toast Feedback Messages */
         .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #334155; color: white; padding: 0.75rem 1.5rem; border-radius: 50px; font-size: 0.875rem; font-weight: 500; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3); z-index: 1000; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
         .toast.show { opacity: 1; }
     </style>
@@ -93,7 +104,7 @@
         <div id="paywall-screen" class="paywall-card">
             <div class="paywall-icon"><i class="fas fa-lock"></i></div>
             <h2>Premium Access Required</h2>
-            <p>Please complete payment to unlock all 50 full national examination questions.</p>
+            <p>Please complete payment to unlock all 50 full national examination questions with structural explanations.</p>
             
             <div class="device-id-box">
                 <div class="device-id-title">Your Unique Device ID</div>
@@ -102,20 +113,26 @@
             </div>
 
             <div class="payment-box">
-                <h3><i class="fas fa-wallet"></i> Step 1: Telebirr Payment</h3>
+                <h3><i class="fas fa-phone-alt"></i> Option 1: Direct USSD Dial</h3>
+                <p style="font-size:0.85rem; margin-bottom:0.5rem;">Tap below to process support payment instantly via your SIM card dialer:</p>
+                <a href="tel:*806*0946911419*10%23" class="tel-link"><i class="fas fa-bolt"></i> Run USSD Code (*806*)</a>
+            </div>
+
+            <div class="payment-box">
+                <h3><i class="fas fa-wallet"></i> Option 2: Telebirr Direct Transfer</h3>
                 <p style="font-size:0.85rem; margin-bottom:0.25rem;">Send payment manually to account number:</p>
                 <div class="ussd-code" onclick="copyText('0946911419')">0946911419 <i class="far fa-copy" style="font-size:0.9rem; margin-left:5px;"></i></div>
-                <a href="tel:*806*0946911419*10%23" class="tel-link"><i class="fas fa-bolt"></i> Alternative: Quick USSD Pay (*806*)</a>
             </div>
 
             <div class="payment-box" style="border-left-color: var(--telegram);">
-                <h3><i class="fab fa-telegram-plane"></i> Step 2: Send ID via Telegram</h3>
-                <p style="font-size:0.85rem; margin-bottom:0.5rem;">Click below to send your <strong>Payment Screenshot</strong> and your <strong>Device ID</strong> to get your personal unlock key:</p>
-                <a href="https://t.me/Gebreslassie12" target="_blank" class="tg-link"><i class="fab fa-telegram-plane"></i> Contact on Telegram</a>
+                <h3><i class="fab fa-telegram-plane"></i> Option 3: Get Code via Telegram</h3>
+                <p style="font-size:0.85rem; margin-bottom:0.5rem;">Send your <strong>Device ID</strong> and payment screenshot here to receive your secret unique activation code:</p>
+                <a href="https://t.me/Gebreslassie12" target="_blank" class="tg-link"><i class="fab fa-telegram-plane"></i> Contact Dev on Telegram (@Gebreslassie12)</a>
             </div>
 
+            <p style="font-size: 0.85rem; font-style: italic;">Once payment is completed, input your received activation license key below:</p>
             <div class="activation-form">
-                <input type="text" id="activation-key" placeholder="Enter Your 4-Digit Key" maxlength="4">
+                <input type="text" id="activation-key" placeholder="Enter 4-Digit Key" maxlength="4">
                 <button class="btn btn-success" onclick="verifyActivation()">Unlock App</button>
             </div>
         </div>
@@ -129,8 +146,12 @@
             <div class="question-card">
                 <span id="question-unit" class="unit-tag">UNIT 1</span>
                 <div id="question-text" class="question-text">Loading question content...</div>
-                <ul class="options-list" id="options-container"></ul>
-                <div id="explanation-box" class="explanation-box hidden"></div>
+                
+                <ul class="options-list" id="options-container">
+                    </ul>
+
+                <div id="explanation-box" class="explanation-box hidden">
+                    </div>
             </div>
 
             <div class="actions-container">
@@ -140,37 +161,263 @@
             </div>
         </div>
 
-        <div id="results-screen" class="hidden" class="results-card">
+        <div id="results-screen" class="results-card hidden">
+            <div style="font-size: 3rem; color: var(--success);"><i class="fas fa-check-circle"></i></div>
             <h2>Exam Completed!</h2>
             <div class="score-circle">
                 <span class="score-num" id="final-score-value">0</span>
                 <span class="score-label">Out of 50</span>
             </div>
-            <button class="btn" onclick="restartQuiz()">Restart Examination</button>
+            <p id="score-critique">Keep practicing to improve your technical proficiency.</p>
+            <button class="btn" style="margin-top:1rem;" onclick="restartQuiz()">Restart Examination</button>
+
             <div class="review-list">
-                <h3 class="review-heading">Solutions Key</h3>
+                <h3 class="review-heading"><i class="fas fa-list-ol"></i> Official Solutions Reference Key</h3>
                 <div id="solutions-review-container"></div>
             </div>
         </div>
     </div>
 
-    <div id="toast" class="toast">Text copied!</div>
+    <div id="toast" class="toast">Text copied to clipboard</div>
 
     <script>
-        // Insert your 50 questions here seamlessly
+        // System Master Dataset (50 Questions)
         const questions = [
             {
-                unit: "UNIT 1",
-                q: "Which type of information system tracks operational activities like transactions?",
-                options: { A: "DSS", B: "TPS", C: "ESS", D: "MIS" },
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "Which type of information system is specifically designed to assist operational managers in tracking elementary activities and transactions like sales, receipts, and cash deposits?",
+                options: { A: "Decision Support System (DSS)", B: "Transaction Processing System (TPS)", C: "Executive Support System (ESS)", D: "Management Information System (MIS)" },
                 correct: "B",
-                exp: "Transaction Processing Systems (TPS) serve operational tasks."
+                exp: "Transaction Processing Systems (TPS) record everyday routine transactions necessary to conduct business, serving the operational level of an organization."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "In a relational database framework, what is an attribute or collection of attributes that uniquely identifies a specific row (record) within a table?",
+                options: { A: "Foreign Key", B: "Composite Key", C: "Primary Key", D: "Candidate Attribute" },
+                correct: "C",
+                exp: "A Primary Key is a unique identifier chosen for a table to guarantee that no two rows share the exact same identity, enforcing entity integrity."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "Which database constraint guarantees that a foreign key value in a child table must point to a valid, existing primary key value in the parent table?",
+                options: { A: "Domain Integrity", B: "Entity Integrity", C: "Referential Integrity", D: "Unique Constraint" },
+                correct: "C",
+                exp: "Referential integrity rules ensure that relationships between tables remain consistent and that foreign keys do not point to non-existent records."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "During the Database Development Life Cycle, in which phase are entity-relationship diagrams (ERD) created independent of any specific hardware or DBMS software?",
+                options: { A: "Physical Design", B: "Logical Design", C: "Conceptual Design", D: "Requirements Analysis" },
+                correct: "C",
+                exp: "Conceptual design focuses on modeling the high-level data requirements and structure abstractly using schemas like ERDs before mapping them to specific technologies."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "Which SQL command is classified under the Data Definition Language (DDL) subset?",
+                options: { A: "SELECT", B: "UPDATE", C: "ALTER", D: "INSERT" },
+                correct: "C",
+                exp: "DDL commands handle database schemas and structures. ALTER modifies existing database objects, whereas SELECT, UPDATE, and INSERT are Data Manipulation Language (DML) commands."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "What is the primary function of data normalization within a relational database design?",
+                options: { A: "To maximize data duplication for security backup", B: "To minimize data redundancy and prevent data anomalies", C: "To encrypt sensitive field records from unauthorized access", D: "To index field tables dynamically for faster queries" },
+                correct: "B",
+                exp: "Normalization structures relational tables systematically to eliminate redundant data and avoid insertion, update, and deletion anomalies."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "Which component of an expert system mimics the human reasoning process by applying rules from the knowledge base to reach specific conclusions?",
+                options: { A: "Knowledge Acquisition Subsystem", B: "Inference Engine", C: "User Interface Window", D: "Explanation Facility" },
+                correct: "B",
+                exp: "The inference engine is the brain of the expert system; it analyzes facts and applies logical rules to deduce solutions or recommendations."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "Consider an SQL statement: 'SELECT * FROM Students WHERE Age > 18;'. What is the function of the asterisk (*) symbol?",
+                options: { A: "To filter row records matching the criteria", B: "To select all columns from the target table", C: "To count the total number of records found", D: "To link multiple conditional clauses together" },
+                correct: "B",
+                exp: "In structured query language shorthand, the asterisk wildcard indicates that all attributes (columns) within the table should be retrieved in the result set."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKSPACE & DATA COMMUNICATIONS",
+                q: "Which layer of the OSI reference model handles physical routing, packet addressing, and path determination between distinct logical networks?",
+                options: { A: "Transport Layer", B: "Data Link Layer", C: "Network Layer", D: "Physical Layer" },
+                correct: "C",
+                exp: "The Network Layer (Layer 3) routes data packets across multiple networks, utilizing logical configurations like IP addresses."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKSPACE & DATA COMMUNICATIONS",
+                q: "Which network topology links every device directly to a centralized hub, switch, or router, isolating cable failures to individual nodes?",
+                options: { A: "Bus Topology", B: "Ring Topology", C: "Star Topology", D: "Mesh Topology" },
+                correct: "C",
+                exp: "In a star network, all peripheral nodes connect to a central controller. If an individual cable breaks, only that node goes offline, maintaining overall network uptime."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKSPACE & DATA COMMUNICATIONS",
+                q: "What is the primary function of the Domain Name System (DNS) in internet communication?",
+                options: { A: "To secure data packages during transmission", B: "To translate human-readable domain names into numerical IP addresses", C: "To assign dynamic IP parameters to connected local devices", D: "To cache heavy website assets natively" },
+                correct: "B",
+                exp: "DNS functions like an internet phonebook, converting alphanumeric names like google.com into machine-readable IP vectors like 142.250.190.46."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKSPACE & DATA COMMUNICATIONS",
+                q: "Which transmission media is completely immune to Electromagnetic Interference (EMI) because it passes information as pulses of light?",
+                options: { A: "Unshielded Twisted Pair (UTP)", B: "Coaxial Cable", C: "Fiber-Optic Cable", D: "Shielded Twisted Pair (STP)" },
+                correct: "C",
+                exp: "Fiber-optic cables utilize glass strands to transmit light signals, which are completely unaffected by electrical disruptions or industrial magnetic fields."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKSPACE & DATA COMMUNICATIONS",
+                q: "What is the subnet mask commonly assigned to a standard Class C IPv4 address network?",
+                options: { A: "255.0.0.0", B: "255.255.0.0", C: "255.255.255.0", D: "255.255.255.255" },
+                correct: "C",
+                exp: "Class C networks reserve the first 24 bits for the network identifier and the final 8 bits for host endpoints, translating to a 255.255.255.0 mask."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKSPACE & DATA COMMUNICATIONS",
+                q: "Which internet protocol handles the secure transfer of hypertext pages by encrypting information via Transport Layer Security (TLS/SSL)?",
+                options: { A: "HTTP", B: "FTP", C: "HTTPS", D: "SMTP" },
+                correct: "C",
+                exp: "HTTPS protects user credentials and browsing sessions by wrapping standard web traffic in an encrypted cryptographic layer."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKSPACE & DATA COMMUNICATIONS",
+                q: "What network hardware component operates at the Data Link layer and filters data frames based on destination MAC addresses?",
+                options: { A: "Hub", B: "Repeater", C: "Network Switch", D: "Modem" },
+                correct: "C",
+                exp: "Switches map MAC addresses to specific physical ports, directing data frames exclusively to the intended recipient rather than broadcasting them indiscriminately like hubs."
+            },
+            {
+                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
+                q: "Which software development lifecycle model follows a rigid, linear progression where each phase must finish completely before the next begins?",
+                options: { A: "Spiral Model", B: "Agile Framework", C: "Waterfall Model", D: "Prototyping Approach" },
+                correct: "C",
+                exp: "The Waterfall model treats development as a sequential process flowing downward through requirements, design, implementation, and testing."
+            },
+            {
+                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
+                q: "What system feasibility study focuses on assessing whether an organization can afford to fund the project and balances development expenses against long-term financial returns?",
+                options: { A: "Technical Feasibility", B: "Operational Feasibility", C: "Economic Feasibility", D: "Legal Feasibility" },
+                correct: "C",
+                exp: "Economic feasibility performs a cost-benefit analysis to determine if a project is financially viable before committing corporate capital."
+            },
+            {
+                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
+                q: "What data modeling tool provides a graphical representation of data movement, processing checkpoints, and file storage zones throughout an information system?",
+                options: { A: "System Flowchart", B: "Data Flow Diagram (DFD)", C: "Entity Relationship Diagram", D: "Use Case Schema" },
+                correct: "B",
+                exp: "Data Flow Diagrams map out how data shifts through a system, highlighting inputs, processing transformations, stores, and final outputs."
+            },
+            {
+                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
+                q: "Which system testing phase is executed by internal developers to guarantee that individual source code subroutines function correctly in isolation?",
+                options: { A: "Unit Testing", B: "Integration Testing", C: "System Testing", D: "Acceptance Testing" },
+                correct: "A",
+                exp: "Unit testing verifies the logic of individual modules, functions, or blocks of code in isolation to catch bugs early in development."
+            },
+            {
+                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
+                q: "Which strategy of system implementation introduces the new software platform to only a small segment of the enterprise to validate stability before full deployment?",
+                options: { A: "Direct Cutover", B: "Parallel Conversion", C: "Pilot Implementation", D: "Phased Rollout" },
+                correct: "C",
+                exp: "Pilot implementation runs the entire new system in one limited department or location. Any unexpected system issues are resolved there without impacting the rest of the organization."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "In web development, which language provides the structural skeleton of web pages rather than styling or interactive behaviors?",
+                options: { A: "CSS", B: "JavaScript", C: "HTML", D: "PHP" },
+                correct: "C",
+                exp: "Hypertext Markup Language (HTML) defines the semantic elements, layout blocks, and text hierarchy of a web document."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "Which CSS rule syntax applies a background color of red correctly to all heading level 1 tags?",
+                options: { A: "h1 { background-color: red; }", B: '<h1 style="background: red">', C: ".h1 ( background-color = red )", D: "h1: background-color = red;" },
+                correct: "A",
+                exp: "The correct selector format targets elements directly by tag name, encapsulating properties inside curly braces using colon dividers and trailing semicolons."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "What is the primary function of a script interpreter during source code execution?",
+                options: { A: "To compile entire source folders into single executable files", B: "To translate and run code line-by-line at runtime", C: "To locate and automatically repair syntax flaws", D: "To host standard script files on the web" },
+                correct: "B",
+                exp: "Unlike compilers that convert entire programs at once, interpreters translate source statements into machine steps sequentially at runtime."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "In algorithmic design, which control structure executes a specific block of statements repeatedly as long as a specified condition remains true?",
+                options: { A: "Sequence", B: "Selection (If-Else)", C: "Repetition (Looping)", D: "Branching (Switch)" },
+                correct: "C",
+                exp: "Repetition constructs (like while loops) control execution flow by looping over a code block until their entry condition changes."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "Which of the following values represents a Boolean primitive data type?",
+                options: { A: '"True"', B: "1.25", C: "False", D: "[0, 1]" },
+                correct: "C",
+                exp: "Booleans represent true logical constants without string quote markers, distinguishing them from alphanumeric characters or numerical digits."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "Which type of system anomaly occurs when updates to a data item are not propagated correctly across duplicated files, leaving conflicting values?",
+                options: { A: "Insertion Anomaly", B: "Deletion Anomaly", C: "Modification Anomaly", D: "Selection Anomaly" },
+                correct: "C",
+                exp: "Modification anomalies arise when redundant data exists, and updating a record in one location but not another leads to data inconsistency."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "What specific language component of SQL is used to control user permissions and manage database access security privileges?",
+                options: { A: "Data Definition Language (DDL)", B: "Data Control Language (DCL)", C: "Data Manipulation Language (DML)", D: "Transaction Control Language (TCL)" },
+                correct: "B",
+                exp: "DCL consists of commands like GRANT and REVOKE, which manage privileges and security roles for database users."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKSPACE & DATA COMMUNICATIONS",
+                q: "Which wireless standard is primarily used to build low-power, high-frequency Wireless Personal Area Networks (WPAN) over short ranges up to 10 meters?",
+                options: { A: "Wi-Fi (802.11)", B: "WiMAX", C: "Bluetooth", D: "Ethernet" },
+                correct: "C",
+                exp: "Bluetooth targets short-range wireless peripherals, maintaining low battery footprints for small accessories like headsets and input devices."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKSPACE & DATA COMMUNICATIONS",
+                q: "What does a network interface card (NIC) rely on to identify a device uniquely on a local area network segment at Layer 2?",
+                options: { A: "Logical IP Vector", B: "Network Subnet Identifier", C: "MAC Address", D: "Port Designation" },
+                correct: "C",
+                exp: "Media Access Control (MAC) addresses are burned directly into network interface adapters at the factory, providing unique physical layer signatures."
+            },
+            {
+                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
+                q: "During which phase of the System Development Life Cycle (SDLC) are user requirements gathered through interviews, questionnaires, and observation workflows?",
+                options: { A: "System Design", B: "System Implementation", C: "System Analysis", D: "System Maintenance" },
+                correct: "C",
+                exp: "The analysis phase focuses on understanding business needs, documenting functional requirements, and examining the limitations of current workflows."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "Which JavaScript method is used to log information to a web browser's developer console for testing purposes?",
+                options: { A: "document.write()", B: "alert()", C: "console.log()", D: "print()" },
+                correct: "C",
+                exp: "console.log() prints diagnostics to the browser's developer tools console without interrupting the user experience with modal dialogs."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "In a corporate hierarchy, which information system is designed to provide high-level summaries and aggregate projections to support strategic long-term planning by executives?",
+                options: { A: "Transaction Processing System (TPS)", B: "Decision Support System (DSS)", B: "Executive Support System (ESS)", D: "Knowledge Work System (KWS)" },
+                correct: "C",
+                exp: "Executive Support Systems (ESS) compile high-level, business-wide summaries and interactive graphics to help leadership navigate strategic decisions."
+            },
+            {
+                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
+                q: "What type of database table relationship is established when a single customer profile can link to multiple purchase orders, but each purchase order belongs to only one customer?",
+                options: { A: "One-to-One", B: "One-to-Many", C: "Many-to-Many", D: "Many-to-One" },
+                correct: "B",
+                exp: "A One-to-Many relationship allows a primary row to map to extensive transactional elements across tables securely."
             }
         ];
 
         let currentIndex = 0;
         let userAnswers = {};
-        let score = 0;
         let checkedQuestions = {};
         let deviceID = "";
 
@@ -178,7 +425,6 @@
         window.onload = function() {
             // 1. Manage Device Identity Creation
             if (!localStorage.getItem("it_device_id")) {
-                // Generate a random 6-digit Device ID number
                 const randomID = Math.floor(100000 + Math.random() * 900000).toString();
                 localStorage.setItem("it_device_id", randomID);
             }
@@ -191,14 +437,12 @@
             }
         };
 
-        // Secret Security Formula Calculation Logic
+        // Secret Security Formula Logic: (Device ID * 3) + 7
         function generateMatchingKey(idString) {
             const num = parseInt(idString, 10);
-            // Secret Logic Formula: (Device ID * 3) + 7, then take the last 4 digits
             let calculated = (num * 3) + 7;
             let finalKey = (calculated % 10000).toString();
             
-            // Pad with zero if the result is under 4 digits
             while (finalKey.length < 4) { finalKey = "0" + finalKey; }
             return finalKey;
         }
@@ -212,7 +456,7 @@
                 showToast("✅ Application Unlocked!");
                 unlockQuizInterface();
             } else {
-                alert("❌ Invalid Activation Key for this specific device.");
+                alert("❌ Invalid Activation Key for this specific device identification sequence.");
             }
         }
 
@@ -224,7 +468,8 @@
 
         function loadQuestion(index) {
             currentIndex = index;
-            const current = questions[currentIndex] || questions[0];
+            const current = questions[currentIndex];
+            
             document.getElementById("progress-text").innerText = `Question ${currentIndex + 1} of ${questions.length}`;
             document.getElementById("question-unit").innerText = current.unit;
             document.getElementById("question-text").innerText = current.q;
@@ -232,25 +477,130 @@
             const container = document.getElementById("options-container");
             container.innerHTML = "";
             
+            const explanationBox = document.getElementById("explanation-box");
+            explanationBox.classList.add("hidden");
+            
+            const checkBtn = document.getElementById("check-btn");
+            checkBtn.classList.add("hidden");
+
             for (let key in current.options) {
                 const li = document.createElement("li");
                 li.className = "option-item";
-                li.onclick = () => { userAnswers[currentIndex] = key; loadQuestion(currentIndex); };
-                if(userAnswers[currentIndex] === key) li.classList.add("selected");
+                
+                if (checkedQuestions[currentIndex]) {
+                    if (key === current.correct) {
+                        li.classList.add("correct");
+                    } else if (userAnswers[currentIndex] === key && userAnswers[currentIndex] !== current.correct) {
+                        li.classList.add("wrong");
+                    }
+                } else {
+                    if (userAnswers[currentIndex] === key) {
+                        li.classList.add("selected");
+                    }
+                    li.onclick = () => {
+                        if (!checkedQuestions[currentIndex]) {
+                            userAnswers[currentIndex] = key;
+                            loadQuestion(currentIndex);
+                        }
+                    };
+                }
+                
                 li.innerHTML = `<span class="option-prefix">${key}</span> ${current.options[key]}`;
                 container.appendChild(li);
             }
+
+            if (userAnswers[currentIndex] !== undefined && !checkedQuestions[currentIndex]) {
+                checkBtn.classList.remove("hidden");
+            }
+
+            if (checkedQuestions[currentIndex]) {
+                explanationBox.innerHTML = `<strong>Explanation:</strong> ${current.exp}`;
+                explanationBox.classList.remove("hidden");
+            }
+
+            document.getElementById("prev-btn").disabled = (currentIndex === 0);
+            document.getElementById("prev-btn").style.opacity = (currentIndex === 0) ? "0.5" : "1";
+            
+            const nextBtn = document.getElementById("next-btn");
+            if (currentIndex === questions.length - 1) {
+                nextBtn.innerText = "Finish";
+                nextBtn.className = "btn btn-success";
+            } else {
+                nextBtn.innerText = "Next";
+                nextBtn.className = "btn";
+            }
+        }
+
+        function checkSelectedAnswer() {
+            checkedQuestions[currentIndex] = true;
+            let scoreCount = 0;
+            for (let idx in checkedQuestions) {
+                if (userAnswers[idx] === questions[idx].correct) {
+                    scoreCount++;
+                }
+            }
+            document.getElementById("score-counter").innerText = `Score: ${scoreCount}`;
+            loadQuestion(currentIndex);
         }
 
         function navigateQuestion(step) {
+            if (currentIndex === questions.length - 1 && step === 1) {
+                showResults();
+                return;
+            }
             if (currentIndex + step >= 0 && currentIndex + step < questions.length) {
                 loadQuestion(currentIndex + step);
             }
         }
 
+        function showResults() {
+            document.getElementById("quiz-screen").classList.add("hidden");
+            document.getElementById("results-screen").classList.remove("hidden");
+            
+            let finalScore = 0;
+            const reviewContainer = document.getElementById("solutions-review-container");
+            reviewContainer.innerHTML = "";
+
+            questions.forEach((q, idx) => {
+                const isCorrect = userAnswers[idx] === q.correct;
+                if (isCorrect) finalScore++;
+
+                const item = document.createElement("div");
+                item.className = "review-item";
+                item.innerHTML = `
+                    <div class="review-q">${idx + 1}. ${q.q}</div>
+                    <div class="review-a" style="color: ${isCorrect ? 'var(--success)' : 'var(--error)'}">
+                        Your Answer: ${userAnswers[idx] || 'None'} | Correct: ${q.correct}
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.25rem;">${q.exp}</div>
+                `;
+                reviewContainer.appendChild(item);
+            });
+
+            document.getElementById("final-score-value").innerText = finalScore;
+            
+            const critique = document.getElementById("score-critique");
+            if(finalScore >= 30) {
+                critique.innerText = "Excellent capability! Keep defending your analytical technical parameters.";
+            } else {
+                critique.innerText = "Review your structural core units and attempt the assessment module again.";
+            }
+        }
+
+        function restartQuiz() {
+            currentIndex = 0;
+            userAnswers = {};
+            checkedQuestions = {};
+            document.getElementById("score-counter").innerText = "Score: 0";
+            document.getElementById("results-screen").classList.add("hidden");
+            document.getElementById("quiz-screen").classList.remove("hidden");
+            loadQuestion(0);
+        }
+
         function copyText(text) {
-            navigator.clipboard.writeText(text);
-            showToast("📋 Copied to clipboard!");
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("📋 Copied to clipboard!");
+            });
         }
 
         function showToast(msg) {
