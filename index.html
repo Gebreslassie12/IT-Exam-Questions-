@@ -18,6 +18,7 @@
             --success: #16a34a;
             --error: #dc2626;
             --accent: #f59e0b;
+            --telegram: #0088cc;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -39,6 +40,8 @@
         .payment-box h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem; }
         .ussd-code { display: block; background: #e2e8f0; padding: 0.75rem; border-radius: 6px; font-family: monospace; font-size: 1.1rem; text-align: center; font-weight: bold; color: #000; margin: 0.5rem 0; cursor: pointer; border: 1px dashed #cbd5e1; }
         .tel-link { display: inline-block; background: var(--success); color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; width: 100%; text-align: center; margin-top: 0.5rem; box-shadow: 0 2px 4px rgb(0 0 0 / 0.1); }
+        .tg-link { display: inline-block; background: var(--telegram); color: white; text-decoration: none; padding: 0.75rem 1rem; border-radius: 8px; font-weight: bold; width: 100%; text-align: center; margin-top: 0.5rem; box-shadow: 0 2px 4px rgb(0 0 0 / 0.1); font-size: 1rem; transition: background 0.2s; }
+        .tg-link:hover { background: #0077b5; }
         
         .activation-form { display: flex; gap: 0.5rem; margin-top: 1rem; }
         .activation-form input { flex: 1; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; text-align: center; letter-spacing: 2px; }
@@ -90,14 +93,14 @@
 
     <header>
         <h1>IT Exam Questions</h1>
-        <p>Grade 12 Practice 50 Questions</p>
+        <p>Grade 12 National Exam Practice</p>
     </header>
 
     <div class="container">
         <div id="paywall-screen" class="paywall-card">
             <div class="paywall-icon"><i class="fas fa-lock"></i></div>
             <h2>Premium Access Required</h2>
-            <p>Please complete payment to unlock all 50 full questions with structural explanations.</p>
+            <p>Please complete payment to unlock all full national examination questions with structural explanations.</p>
             
             <div class="payment-box">
                 <h3><i class="fas fa-phone-alt"></i> Option 1: Direct USSD Dial</h3>
@@ -111,16 +114,22 @@
                 <div class="ussd-code" onclick="copyText('0946911419')">0946911419 <i class="far fa-copy" style="font-size:0.9rem; margin-left:5px;"></i></div>
             </div>
 
+            <div class="payment-box" style="border-left-color: var(--telegram);">
+                <h3><i class="fab fa-telegram-plane"></i> Option 3: Get Code via Telegram</h3>
+                <p style="font-size:0.85rem; margin-bottom:0.5rem;">Send your payment screenshot here to receive your secret 4-digit code directly:</p>
+                <a href="https://t.me/Gebreslassie12" target="_blank" class="tg-link"><i class="fab fa-telegram-plane"></i> Contact Me on Telegram (@Gebreslassie12)</a>
+            </div>
+
             <p style="font-size: 0.85rem; font-style: italic;">Once payment is completed, input your received activation license key below:</p>
             <div class="activation-form">
-                <input type="text" id="activation-key" placeholder="Enter 4-Digit Key" maxlength="8">
+                <input type="text" id="activation-key" placeholder="Enter Key" maxlength="8">
                 <button class="btn btn-success" onclick="verifyActivation()">Unlock App</button>
             </div>
         </div>
 
         <div id="quiz-screen" class="hidden">
             <div class="quiz-info-bar">
-                <span id="progress-text">Question 1 of 50</span>
+                <span id="progress-text">Question 1</span>
                 <span id="score-counter">Score: 0</span>
             </div>
 
@@ -147,7 +156,7 @@
             <h2>Exam Completed!</h2>
             <div class="score-circle">
                 <span class="score-num" id="final-score-value">0</span>
-                <span class="score-label">Out of 50</span>
+                <span class="score-label" id="final-score-total">Out of</span>
             </div>
             <p id="score-critique">Keep practicing to improve your technical proficiency.</p>
             <button class="btn" style="margin-top:1rem;" onclick="restartQuiz()">Restart Examination</button>
@@ -162,7 +171,7 @@
     <div id="toast" class="toast">Text copied to clipboard</div>
 
     <script>
-        // System Master Dataset (50 Questions explicitly populated as mandated)
+        // System Master Dataset (Exactly 50 Complete Questions)
         const questions = [
             {
                 unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
@@ -221,49 +230,49 @@
                 exp: "In structured query language shorthand, the asterisk wildcard indicates that all attributes (columns) within the table should be retrieved in the result set."
             },
             {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
                 q: "Which layer of the OSI reference model handles physical routing, packet addressing, and path determination between distinct logical networks?",
                 options: { A: "Transport Layer", B: "Data Link Layer", C: "Network Layer", D: "Physical Layer" },
                 correct: "C",
                 exp: "The Network Layer (Layer 3) routes data packets across multiple networks, utilizing logical configurations like IP addresses."
             },
             {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
                 q: "Which network topology links every device directly to a centralized hub, switch, or router, isolating cable failures to individual nodes?",
                 options: { A: "Bus Topology", B: "Ring Topology", C: "Star Topology", D: "Mesh Topology" },
                 correct: "C",
                 exp: "In a star network, all peripheral nodes connect to a central controller. If an individual cable breaks, only that node goes offline, maintaining overall network uptime."
             },
             {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
                 q: "What is the primary function of the Domain Name System (DNS) in internet communication?",
                 options: { A: "To secure data packages during transmission", B: "To translate human-readable domain names into numerical IP addresses", C: "To assign dynamic IP parameters to connected local devices", D: "To cache heavy website assets natively" },
                 correct: "B",
                 exp: "DNS functions like an internet phonebook, converting alphanumeric names like google.com into machine-readable IP vectors like 142.250.190.46."
             },
             {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
                 q: "Which transmission media is completely immune to Electromagnetic Interference (EMI) because it passes information as pulses of light?",
                 options: { A: "Unshielded Twisted Pair (UTP)", B: "Coaxial Cable", C: "Fiber-Optic Cable", D: "Shielded Twisted Pair (STP)" },
                 correct: "C",
                 exp: "Fiber-optic cables utilize glass strands to transmit light signals, which are completely unaffected by electrical disruptions or industrial magnetic fields."
             },
             {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
                 q: "What is the subnet mask commonly assigned to a standard Class C IPv4 address network?",
                 options: { A: "255.0.0.0", B: "255.255.0.0", C: "255.255.255.0", D: "255.255.255.255" },
                 correct: "C",
                 exp: "Class C networks reserve the first 24 bits for the network identifier and the final 8 bits for host endpoints, translating to a 255.255.255.0 mask."
             },
             {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
                 q: "Which internet protocol handles the secure transfer of hypertext pages by encrypting information via Transport Layer Security (TLS/SSL)?",
                 options: { A: "HTTP", B: "FTP", C: "HTTPS", D: "SMTP" },
                 correct: "C",
                 exp: "HTTPS protects user credentials and browsing sessions by wrapping standard web traffic in an encrypted cryptographic layer."
             },
             {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
                 q: "What network hardware component operates at the Data Link layer and filters data frames based on destination MAC addresses?",
                 options: { A: "Hub", B: "Repeater", C: "Network Switch", D: "Modem" },
                 correct: "C",
@@ -354,14 +363,14 @@
                 exp: "DCL consists of commands like GRANT and REVOKE, which manage privileges and security roles for database users."
             },
             {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
                 q: "Which wireless standard is primarily used to build low-power, high-frequency Wireless Personal Area Networks (WPAN) over short ranges up to 10 meters?",
                 options: { A: "Wi-Fi (802.11)", B: "WiMAX", C: "Bluetooth", D: "Ethernet" },
                 correct: "C",
                 exp: "Bluetooth targets short-range wireless peripherals, maintaining low battery footprints for small accessories like headsets and input devices."
             },
             {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
                 q: "What does a network interface card (NIC) rely on to identify a device uniquely on a local area network segment at Layer 2?",
                 options: { A: "Logical IP Vector", B: "Network Subnet Identifier", C: "MAC Address", D: "Port Designation" },
                 correct: "C",
@@ -393,135 +402,133 @@
                 q: "What type of database table relationship is established when a single customer profile can link to multiple purchase orders, but each purchase order belongs to only one customer?",
                 options: { A: "One-to-One", B: "One-to-Many", C: "Many-to-Many", D: "Many-to-One" },
                 correct: "B",
-                exp: "A classic one-to-many relationship maps an individual parent row to multiple child instances while preventing children from linking back to multiple parents."
-            },
-            {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
-                q: "Which protocol functions at the Transport layer of the OSI model, guaranteeing reliable, connection-oriented data delivery via error checking and sequence numbers?",
-                options: { A: "User Datagram Protocol (UDP)", B: "Transmission Control Protocol (TCP)", C: "Internet Protocol (IP)", D: "Address Resolution Protocol (ARP)" },
-                correct: "B",
-                exp: "TCP manages reliability by opening an explicit communication channel, tracking packet delivery sequence, and verifying integrity before reassembly."
-            },
-            {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
-                q: "What network hardware system connects distinct logical networks together, analyzing destination IP headers to forward packets along optimal routes?",
-                options: { A: "Network Bridge", B: "Network Switch", C: "Network Router", D: "Active Hub" },
-                correct: "C",
-                exp: "Routers operate at Layer 3 of the OSI model, linking separate networks and forwarding packets based on logical IP configurations."
-            },
-            {
-                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
-                q: "What type of system documentation contains instructions on how to install software packages, manage user groups, and troubleshoot network errors?",
-                options: { A: "User Manual", B: "System Administrator Guide", C: "Program Source Manual", D: "Requirements Specification Document" },
-                correct: "B",
-                exp: "System Administrator documentation outlines maintenance tasks, server configurations, access privileges, and backup strategies for IT staff."
-            },
-            {
-                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
-                q: "What HTML tag is used to embed an absolute hyperlink to another web page?",
-                options: { A: '<link src="...">', B: '<a href="...">', C: '<href url="...">', D: '<p anchor="...">' },
-                correct: "B",
-                exp: "The anchor tag (<a>) utilizes the 'href' attribute to define the target destination URL for clickable elements."
+                exp: "A One-to-Many relationship allows a primary row to map to extensive transactional elements across tables securely."
             },
             {
                 unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
-                q: "In database administration, what does the 'ACID' acronym stand for to verify transaction reliability?",
-                options: { A: "Atomicity, Consistency, Isolation, Durability", B: "Access, Control, Integrity, Definition", C: "Authentication, Coding, Indexing, Distribution", D: "Automation, Concurrency, Isolation, Deletion" },
-                correct: "A",
-                exp: "ACID properties ensure that database transactions execute reliably, preserving data integrity even in the event of system or hardware failures."
-            },
-            {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
-                q: "Which security platform monitors inbound and outbound network traffic, blocking unauthorized access based on a preconfigured set of security rules?",
-                options: { A: "Network Switch", B: "Encryption Engine", C: "Firewall", D: "Proxy Server" },
-                correct: "C",
-                exp: "Firewalls act as security checkpoints on network boundaries, regulating data traffic based on a predefined set of access rules."
-            },
-            {
-                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
-                q: "Which methodology of software deployment involves running the legacy system and the new platform side-by-side for an extended validation period?",
-                options: { A: "Direct Cutover", B: "Parallel Conversion", C: "Pilot Testing", D: "Phased Rollout" },
-                correct: "B",
-                exp: "Parallel conversion reduces risk by running both old and new systems concurrently until the new software is fully validated."
-            },
-            {
-                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
-                q: "What is the primary function of CSS within web design?",
-                options: { A: "To establish data persistence and back-end logic", B: "To manage structural page layouts and presentation styling", C: "To process form input strings securely", D: "To index domain assets for search engines" },
-                correct: "B",
-                exp: "Cascading Style Sheets (CSS) separate content structure from presentation, managing colors, fonts, layouts, and overall design aesthetics."
+                q: "Which property ensures that once a database transaction commits, its changes survive even in the event of a total system crash or power outage?",
+                options: { A: "Atomicity", B: "Consistency", C: "Isolation", D: "Durability" },
+                correct: "D",
+                exp: "Durability guarantees that completed and committed database modifications are written permanently to non-volatile storage."
             },
             {
                 unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
-                q: "What database object organizes data row fields into optimized structures to speed up search and retrieval operations?",
-                options: { A: "View", B: "Constraint", C: "Index", D: "Schema" },
+                q: "Which database schema architecture level defines exactly how the data fields are physically structured and stored on magnetic disks?",
+                options: { A: "External Level", B: "Conceptual Level", C: "Internal Level", D: "Logical Level" },
                 correct: "C",
-                exp: "An index builds quick pointer references over designated columns, reducing table scan requirements during query execution."
+                exp: "The internal or physical level describes data structures, file allocations, page layouts, and physical indices on disk storage."
             },
             {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
-                q: "Which utility tool is used to test network connectivity to a specific destination IP host by sending ICMP echo request packets?",
-                options: { A: "IPCONFIG", B: "PING", C: "NSLOOKUP", D: "TRACERT" },
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
+                q: "Which diagnostic utility uses ICMP echo requests to verify that a remote node network configuration is accessible across an active connection?",
+                options: { A: "IPCONFIG", B: "PING", C: "NSLOOKUP", D: "NETSTAT" },
                 correct: "B",
-                exp: "The PING command tests whether a target IP endpoint is active and reachable, measuring round-trip transmission times using ICMP echoes."
+                exp: "PING transmits small diagnostic packet queries to check end-to-end transport availability and measure round-trip link latencies."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
+                q: "What is the key functional difference between a router and a standard network hub device?",
+                options: { A: "Hubs route variables using logical routing maps", B: "Routers operate at Layer 3 to route packets across distinct networks, while hubs blindly broadcast data frames at Layer 1", C: "Hubs automatically allocate internal IP leases via DHCP services", D: "Routers are completely immune to localized noise interferences" },
+                correct: "B",
+                exp: "Routers forward packets across networks using IP routing logic. Hubs lack intelligence and simply repeat all incoming bits out to every connected port."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
+                q: "Which specific transmission medium consists of a central copper conductor insulated by a dielectric layer, a braided metallic shield, and an outer jacket?",
+                options: { A: "Fiber-optic strand", B: "Coaxial cable", C: "Unshielded twisted pair", D: "Infrared beam array" },
+                correct: "B",
+                exp: "Coaxial cabling wraps a heavy copper core inside multiple protective shielding layers, reducing external interference for cable television and older bus networks."
+            },
+            {
+                unit: "UNIT 2: COMPUTER NETWORKS & DATA COMMUNICATIONS",
+                q: "What primary mechanism allows multiple devices on a single local network to share one single public IP address parameter concurrently?",
+                options: { A: "Dynamic Domain Name System (DDNS)", B: "Network Address Translation (NAT)", C: "Dynamic Host Configuration Protocol (DHCP)", D: "Address Resolution Protocol (ARP)" },
+                correct: "B",
+                exp: "NAT maps local private IP configurations behind a single public route interface, saving limited public IPv4 identifier resource spaces."
             },
             {
                 unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
-                q: "What type of technical diagram models the operational interactions and structural links between external actors and a system's core capabilities?",
-                options: { A: "Class Diagram", B: "Use Case Diagram", C: "Data Flow Schema", D: "Entity Matrix" },
-                correct: "B",
-                exp: "Use Case diagrams model how external users or systems interact with specific application capabilities, defining functional scope abstractly."
-            },
-            {
-                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
-                q: "Which character sequence acts as the structural assignment operator in most standard high-level programming languages?",
-                options: { A: "==", B: "=", C: "===", D: ":=" },
-                correct: "B",
-                exp: "The single equal sign (=) assigns the evaluated value from its right-hand expression to the variable named on its left-hand side."
-            },
-            {
-                unit: "UNIT 1: INFORMATION SYSTEMS & DATABASE MANAGEMENT SYSTEMS",
-                q: "Which database anomaly occurs when deleting a specific row unintentionally erases other unrelated data attributes from the system configuration?",
-                options: { A: "Deletion Anomaly", B: "Loss Anomaly", C: "Structural Anomaly", D: "Cascading Flaw" },
-                correct: "A",
-                exp: "A deletion anomaly occurs when poorly normalized tables cause the removal of a record to inadvertently delete separate, important data attributes."
-            },
-            {
-                unit: "UNIT 2: COMPUTER NETWORKING & DATA COMMUNICATIONS",
-                q: "What does the abbreviation LAN stand for in network architecture?",
-                options: { A: "Logical Access Network", B: "Link Allocation Node", C: "Local Area Network", D: "Linear Array Network" },
+                q: "Which component of an agile development cycle represents a minor, functional system feature delivered inside a short 2-to-4 week window?",
+                options: { A: "System Legacy", B: "Waterfall Milestone", C: "Sprint Deliverable", D: "Feasibility Criterion" },
                 correct: "C",
-                exp: "LAN stands for Local Area Network, which connects computing infrastructure over a limited localized geographic area, such as a school or building."
+                exp: "Agile teams operate in short, time-boxed intervals called Sprints to create small, iteratively updated application features."
             },
             {
                 unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
-                q: "What phase of the SDLC focuses on drafting technical design documents, database schemas, and interface mockups based on user requirements?",
-                options: { A: "System Analysis", B: "System Design", C: "System Implementation", D: "System Feasibility" },
+                q: "What requirement gathering methodology uses structured group workshops to gather stakeholders, users, and analysts to define system goals rapidly?",
+                options: { A: "Document Review", B: "Joint Application Design (JAD)", C: "Prototyping Iteration", D: "Field Observation" },
                 correct: "B",
-                exp: "The design phase translates functional requirements into physical technical descriptions, including architecture, schemas, and interface mockups."
+                exp: "JAD sessions bring users and IT professionals together in intense design workshops to accelerate system requirement gathering."
             },
             {
-                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
-                q: "Which HTML tag is used to organize data into row and column formats on a page?",
-                options: { A: "<form>", B: "<grid>", C: "<table>", D: "<list>" },
+                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
+                q: "Which system maintenance type addresses errors and bugs discovered by active users after a production deployment?",
+                options: { A: "Perfective Maintenance", B: "Adaptive Maintenance", C: "Corrective Maintenance", D: "Preventative Maintenance" },
                 correct: "C",
-                exp: "The <table> tag uses structural nested tags like <tr> (rows) and <td> (cells) to arrange text data into tabular grids."
+                exp: "Corrective maintenance repairs software bugs, runtime faults, and script errors found during active operations."
+            },
+            {
+                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
+                q: "What specialized graphical UML chart maps out the sequence of programmatic actions, decisions, and parallel operational flows inside a system?",
+                options: { A: "Deployment Diagram", B: "Activity Diagram", C: "Class Diagram", D: "Component Diagram" },
+                correct: "B",
+                exp: "Activity diagrams illustrate procedural workflows, conditional branches, and task execution sequences within a system."
+            },
+            {
+                unit: "UNIT 3: SOFTWARE ENGINEERING & SYSTEM ANALYSIS",
+                q: "Which system cutover technique involves operating both the legacy system and the new platform simultaneously for a period of time?",
+                options: { A: "Direct Cutover", B: "Parallel Conversion", C: "Phased Implementation", D: "Abrupt Discontinuation" },
+                correct: "B",
+                exp: "Parallel conversion keeps both systems running together. While expensive and redundant, it provides a safe fallback option if the new system fails."
             },
             {
                 unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
-                q: "What is the primary function of a compiler tool in system development?",
-                options: { A: "To execute source code statements line-by-line", B: "To translate entire source files into independent machine-level binaries", C: "To host database engines dynamically on a server", D: "To map web endpoints to specific physical local networks" },
+                q: "Which element attribute is used in HTML to designate a hyperlinked target URL endpoint within anchor tags?",
+                options: { A: "src", B: "href", C: "link", D: "path" },
                 correct: "B",
-                exp: "Compilers convert high-level source code into low-level machine instructions or binaries before execution, optimizing performance and security attributes."
+                exp: "The href (hypertext reference) parameter provides the target web address or anchor reference for the hyperlink."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "What CSS layout technique allows elements to adjust size dynamically to fit fluid multi-screen media breakpoints easily?",
+                options: { A: "Static Padding Blocks", B: "Inline Inline-Styles", C: "Media Queries & Flexbox layouts", D: "Absolute Table Grids" },
+                correct: "C",
+                exp: "Media queries combined with Flexbox/Grid modules provide responsive design structures that automatically scale layout components across mobile and desktop displays."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "What is the expected console output of the JavaScript evaluation statement: console.log(typeof '100');?",
+                options: { A: "number", B: "string", C: "boolean", D: "undefined" },
+                correct: "B",
+                exp: "Single or double quotes convert the value into an alphanumeric string primitive, regardless of the numeric digits inside."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "In variable declarations, what is the key scope difference between declaring with 'let' versus 'var' in modern JavaScript configurations?",
+                options: { A: "'let' variables cannot hold string references", B: "'let' provides block-level scoping, whereas 'var' uses function-level scoping parameters", C: "'var' forces immutable constant allocations", D: "There is no functional distinction in script compilation" },
+                correct: "B",
+                exp: "Variables defined with let or const are confined to the immediate curly block context where they are created, helping prevent global scope leaks."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "Which error type prevents an application script from compiling or rendering in the browser due to an incorrect syntax layout command rule?",
+                options: { A: "Logic Error", B: "Syntax Error", C: "Runtime Exception", D: "Semantic Glitch" },
+                correct: "B",
+                exp: "Syntax errors occur when structural rules of the programming language are broken, preventing the engine from parsing the code."
+            },
+            {
+                unit: "UNIT 4: WEB TECHNOLOGIES & PROGRAMMING LOGIC",
+                q: "What specialized tool compiles high-level human-written source code modules entirely into binary machine configurations before system execution?",
+                options: { A: "Decompiler Module", B: "Compiler", C: "Code Formatter", D: "Text Editor" },
+                correct: "B",
+                exp: "Compilers convert an entire source file or project into standalone native machine binaries prior to deployment and execution."
             }
         ];
 
         let currentIndex = 0;
         let userAnswers = {};
-        let score = 0;
         let checkedQuestions = {};
 
-        // Security Lock Engine Verification
         window.onload = function() {
             if (localStorage.getItem("it_quiz_activated") === "true") {
                 unlockQuizInterface();
@@ -530,13 +537,12 @@
 
         function verifyActivation() {
             const inputKey = document.getElementById("activation-key").value.trim();
-            // Secure validation key: 2017
-            if (inputKey === "2017") {
+            if (inputKey === "1234" || inputKey === "9999") {
                 localStorage.setItem("it_quiz_activated", "true");
-                showToast("✅ Application Unlocked Successfully!");
+                showToast("✅ Application Unlocked!");
                 unlockQuizInterface();
             } else {
-                alert("❌ Invalid Activation Key! Please try again or contact support.");
+                alert("❌ Invalid Activation Key.");
             }
         }
 
@@ -548,109 +554,130 @@
 
         function loadQuestion(index) {
             currentIndex = index;
-            const current = questions[index];
+            const current = questions[currentIndex];
             
-            document.getElementById("progress-text").innerText = `Question ${index + 1} of 50`;
+            document.getElementById("progress-text").innerText = `Question ${currentIndex + 1} of ${questions.length}`;
             document.getElementById("question-unit").innerText = current.unit;
             document.getElementById("question-text").innerText = current.q;
             
             const container = document.getElementById("options-container");
             container.innerHTML = "";
             
-            const isChecked = checkedQuestions[index] || false;
-            const selectedOpt = userAnswers[index];
+            const explanationBox = document.getElementById("explanation-box");
+            explanationBox.classList.add("hidden");
+            
+            const checkBtn = document.getElementById("check-btn");
+            checkBtn.classList.add("hidden");
 
             for (let key in current.options) {
                 const li = document.createElement("li");
                 li.className = "option-item";
                 
-                if (selectedOpt === key) li.classList.add("selected");
-                
-                if (isChecked) {
-                    if (key === current.correct) li.className = "option-item correct";
-                    else if (selectedOpt === key) li.className = "option-item wrong";
+                if (checkedQuestions[currentIndex]) {
+                    if (key === current.correct) {
+                        li.classList.add("correct");
+                    } else if (userAnswers[currentIndex] === key && userAnswers[currentIndex] !== current.correct) {
+                        li.classList.add("wrong");
+                    }
                 } else {
-                    li.onclick = () => selectOption(key);
+                    if (userAnswers[currentIndex] === key) {
+                        li.classList.add("selected");
+                    }
+                    li.onclick = () => {
+                        if (!checkedQuestions[currentIndex]) {
+                            userAnswers[currentIndex] = key;
+                            loadQuestion(currentIndex);
+                        }
+                    };
                 }
-
+                
                 li.innerHTML = `<span class="option-prefix">${key}</span> ${current.options[key]}`;
                 container.appendChild(li);
             }
 
-            const checkBtn = document.getElementById("check-btn");
-            const expBox = document.getElementById("explanation-box");
-
-            if (isChecked) {
-                checkBtn.classList.add("hidden");
-                expBox.classList.remove("hidden");
-                expBox.innerHTML = `<strong>Explanation:</strong> ${current.exp}`;
-            } else {
-                expBox.classList.add("hidden");
-                if (selectedOpt) checkBtn.classList.remove("hidden");
-                else checkBtn.classList.add("hidden");
+            if (userAnswers[currentIndex] !== undefined && !checkedQuestions[currentIndex]) {
+                checkBtn.classList.remove("hidden");
             }
 
-            document.getElementById("prev-btn").disabled = (index === 0);
-            document.getElementById("prev-btn").style.opacity = (index === 0) ? "0.5" : "1";
-            document.getElementById("next-btn").innerText = (index === questions.length - 1) ? "Finish" : "Next";
-        }
+            if (checkedQuestions[currentIndex]) {
+                explanationBox.innerHTML = `<strong>Explanation:</strong> ${current.exp}`;
+                explanationBox.classList.remove("hidden");
+            }
 
-        function selectOption(key) {
-            if (checkedQuestions[currentIndex]) return;
-            userAnswers[currentIndex] = key;
+            document.getElementById("prev-btn").disabled = (currentIndex === 0);
+            document.getElementById("prev-btn").style.opacity = (currentIndex === 0) ? "0.5" : "1";
             
-            // Re-render immediately to update visual selection borders
-            loadQuestion(currentIndex);
+            const nextBtn = document.getElementById("next-btn");
+            if (currentIndex === questions.length - 1) {
+                nextBtn.innerText = "Finish";
+                nextBtn.className = "btn btn-success";
+            } else {
+                nextBtn.innerText = "Next";
+                nextBtn.className = "btn";
+            }
         }
 
         function checkSelectedAnswer() {
-            const selected = userAnswers[currentIndex];
-            if (!selected) return;
-
             checkedQuestions[currentIndex] = true;
-            if (selected === questions[currentIndex].correct) {
-                score++;
-                document.getElementById("score-counter").innerText = `Score: ${score}`;
+            let scoreCount = 0;
+            for (let idx in checkedQuestions) {
+                if (userAnswers[idx] === questions[idx].correct) {
+                    scoreCount++;
+                }
             }
+            document.getElementById("score-counter").innerText = `Score: ${scoreCount}`;
             loadQuestion(currentIndex);
         }
 
         function navigateQuestion(step) {
-            const targetIndex = currentIndex + step;
-            if (targetIndex >= 0 && targetIndex < questions.length) {
-                loadQuestion(targetIndex);
-            } else if (targetIndex === questions.length) {
-                showResultsSummary();
+            if (currentIndex === questions.length - 1 && step === 1) {
+                showResults();
+                return;
+            }
+            if (currentIndex + step >= 0 && currentIndex + step < questions.length) {
+                loadQuestion(currentIndex + step);
             }
         }
 
-        function showResultsSummary() {
+        function showResults() {
             document.getElementById("quiz-screen").classList.add("hidden");
             document.getElementById("results-screen").classList.remove("hidden");
-            document.getElementById("final-score-value").innerText = score;
+            
+            let finalScore = 0;
+            const reviewContainer = document.getElementById("solutions-review-container");
+            reviewContainer.innerHTML = "";
 
-            const critique = document.getElementById("score-critique");
-            if (score >= 40) critique.innerText = "Excellent work! Highly prepared for national benchmarks.";
-            else if (score >= 25) critique.innerText = "Good job! Review the answers below to reach perfection.";
-            else critique.innerText = "Needs improvement. Review the structural explanations below.";
-
-            const container = document.getElementById("solutions-review-container");
-            container.innerHTML = "";
             questions.forEach((q, idx) => {
-                const div = document.createElement("div");
-                div.className = "review-item";
-                div.innerHTML = `
+                const isCorrect = userAnswers[idx] === q.correct;
+                if (isCorrect) finalScore++;
+
+                const item = document.createElement("div");
+                item.className = "review-item";
+                item.innerHTML = `
                     <div class="review-q">${idx + 1}. ${q.q}</div>
-                    <div class="review-a">✅ Correct Answer: ${q.correct} — ${q.options[q.correct]}</div>
+                    <div class="review-a" style="color: ${isCorrect ? 'var(--success)' : 'var(--error)'}">
+                        Your Answer: ${userAnswers[idx] || 'None'} | Correct: ${q.correct}
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.25rem;">${q.exp}</div>
                 `;
-                container.appendChild(div);
+                reviewContainer.appendChild(item);
             });
+
+            document.getElementById("final-score-value").innerText = finalScore;
+            document.getElementById("final-score-total").innerText = `Out of ${questions.length}`;
+            
+            const critique = document.getElementById("score-critique");
+            if(finalScore >= (questions.length * 0.6)) {
+                critique.innerText = "Excellent capability! Keep defending your analytical technical parameters.";
+            } else {
+                critique.innerText = "Review your structural core units and attempt the assessment module again.";
+            }
         }
 
         function restartQuiz() {
+            currentIndex = 0;
             userAnswers = {};
             checkedQuestions = {};
-            score = 0;
             document.getElementById("score-counter").innerText = "Score: 0";
             document.getElementById("results-screen").classList.add("hidden");
             document.getElementById("quiz-screen").classList.remove("hidden");
@@ -658,15 +685,16 @@
         }
 
         function copyText(text) {
-            navigator.clipboard.writeText(text);
-            showToast("📋 Number copied to clipboard!");
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("📋 Copied to clipboard!");
+            });
         }
 
         function showToast(msg) {
             const toast = document.getElementById("toast");
             toast.innerText = msg;
             toast.classList.add("show");
-            setTimeout(() => toast.classList.remove("show"), 2500);
+            setTimeout(() => toast.classList.remove("show"), 2000);
         }
     </script>
 </body>
