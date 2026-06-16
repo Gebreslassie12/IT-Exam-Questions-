@@ -1,0 +1,17 @@
+{
+  "name": "IT Exam Questions",
+  "short_name": "IT Quizzes",
+  "description": "Grade 12 Information Technology National Exam Preparation App",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme-color": "#1e3a8a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2232/2232688.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
